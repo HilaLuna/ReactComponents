@@ -85,4 +85,9 @@ React'ta iki çeşit bileşen türü vardır:
 
 - veri olmama durumunda ekrana bir şey gelecekse ternary tercih edilir:
 - - dog ? dog.name: "karpuz"
+
 # ReactComponents
+
+<h2> Components Screen Gif </h2>
+
+![](screen.gif)
