@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Component
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React'ta iki çeşit bileşen türü vardır:
 
-## Available Scripts
+1. Function Component
 
-In the project directory, you can run:
+- Modern projelerde class'lar fazla kod alanı kapladığından, class'ın sahip olduğu state, lifecycle olayına sahip olmamasına rağmen react hookları sayesinde class'ların yaptığı her şeyi yapmış oluyor yani class'ların bütün özelliklerini edindiler. Ve daha az kod alanı kapladığı ve daha okunabilir olduğu için daha çok tercih edilir.
 
-### `npm start`
+2. Class Component
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Function component'lar ortaya çıkmadan önce kullanılırlardı
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Modern projelerde yerini function component'lara bıraktılar.
 
-### `npm test`
+- Hooks kullanımı mevcut değil
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Lifecycle (Yaşam Döngüsü)
 
-### `npm run build`
+- React bileşenleri de normal bir canlı gibi bir yaşam döngüsüne sahiptir.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Bu döngü 3 ana aşamadan oluşur.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Doğma - Mount (Ekrana Basılma)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Gelişme - Updating (Güncelleme yani state'lerinin güncellenmesi)
 
-### `npm run eject`
+3. Ölme - Unmount (Ekrandan Gitme)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Bizim bu yaşam döngüsüne hakim olmamız gerekir, izlememiz gerekir.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Bileşenin içerisinde yaşam bileşen ekrana basıldığında, güncellendiğinde veya ekrandan gittiğinde bir fonksiyon çalıştırmak isteyebiliriz. Örneğin bileşen ekrana basıldığında yani yüklendiğinde api isteği atmak isteyebilir. Burada da bizim için bir zorluk ortaya çıkıyor.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Bu yüzden bu yaşam döngüsünün adımlarını izleyebilmemiz gerekir. Biz api isteği atmadan önce load yani sayfanın yüklenmesini izliyorduk.
+- Class component'larda bu adımları izlemek için bazı metodlar bulunur.
+- Bir bileşenin ekrana basılma yani yüklenme olayını izlemek istiyorsak, yaşam döngüsü içindeki 'mounting' kısmında componentDidMount yani bileşenim ekrana basıldı mı metodunu kullanıyoruz. componentDidUpdate, bileşenim güncellendi mi, componentWillUnmount da bileşenim ekrandan gitti mi metodları.
+- componentDidMount ve diğer metodlar classComponent'a özel metodlar, bunları functional component'larda kullanamayız.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# !!!
 
-## Learn More
+- Class component'ların sahip olduğu ama function'ların sahip olmadığı özellikler için function'ların da bu özellikleri kullanabilmesi için react hooks ortaya çıkıyor.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Class'ların sahip olduğu özellikleri functional component'larda kullanmamızı sağlayan fonksiyonlar. Örneğin class component'lardaki state'i function component'larda "useState" hooku kullanmamızı sağlar.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Class component'lardaki yaşam döngüsünü funtion component'larda "useEffect" hooku kullanmamızı sağlar.
 
-### Code Splitting
+# useEffect
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Amacı: componentDidMount | componentDidUpdate | componentWillUnmount yerine function'larda kullanılır. Yani class component'larda üç farklı olay izlememizi sağlayan bu üç fonksiyonun da görevini tek başına üstleniyor funtion component'larda.
 
-### Analyzing the Bundle Size
+- Fonksiyonel bileşenlerde yaşam döngüsünü izlememizi sağlar.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# # useEffect'in Kullanımları
 
-### Making a Progressive Web App
+1. componentDidMount bileşenin ekrana gelme olayını izlemeye yarayan kullanım
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- - 1.parametre > çalışacak fonksiyon
+- - 2.parametre > boş bağımlılık dizisi
+- - `useEffect(()=>{},[])` birinci parametre olarak fonksiyonu süslü parantez içinde, ikinci parametre olarak da boş diziyi köşeli parantezler içinde veriyoruz.
 
-### Advanced Configuration
+2. componentWillUnmount: bileşenin ekrandan gitme olayını izlemeye yarar
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- - 1.parametre > çalışacak fonksiyon
+- - 2.parametre > boş bağımlılık dizisi
+- - çalışacak fonksiyonun return satırına bir fonksiyon daha yazarız.
+- - bu yazdığımız fonksiyon bileşen ekrandan gidince çalışır.
+- - `useEffect(()=>{ return () => },[])`
 
-### Deployment
+3. ComponentDidUpdate: Bileşene gelen prop veya state her değiştiğinde yani bileşen her render olduğunda çalışan yöntem
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- - 1.parametre > çalışacak fonksiyon
+- - 2.parametre yok
+- - `useEffect(()=>{})`
 
-### `npm run build` fails to minify
+4. ComponentDidUpdate2: Bileşende belirli bir state'in/state'lerin değişimini izlemek istediğimizde kullanılan yöntem
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- - 1.parametre > çalışacak fonksiyon
+- - 2.parametre > dolu bağımlılık dizisi []
+- - `useEffect(()=>{}, [page, name])`
+
+# Optional Chaining (Koşullu Zincirleme)
+
+- Eğerki objenin bir değerinin olmama ihtimali varsa bunu ekrana basarken şu yolu izleyebiliriz:
+- dog && dog.name > köpek varsa ismini ekrana bas
+- dog?.name > köpek varsa ismini ekrana bas
+
+- veri olmama durumunda ekrana bir şey gelecekse ternary tercih edilir:
+- - dog ? dog.name: "karpuz"
+# ReactComponents

@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Paper from "./components/funcComponent";
+import Counter from "./components/classComponents";
+import CountPage from "./components/CountPage";
+import UserPage from "./components/UserPage";
+import { useState } from "react";
 
 function App() {
+  const [isHide, setIsHide] = useState(true);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Components</h1>
+
+      <button onClick={() => setIsHide(!isHide)}>Gizle/Göster</button>
+
+      {!isHide && <UserPage />}
     </div>
   );
 }
